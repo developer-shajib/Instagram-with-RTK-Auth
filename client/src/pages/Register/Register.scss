@@ -1,0 +1,197 @@
+.wrapper {
+  padding-top: 20px;
+
+  .container {
+    width: 420px;
+    .top-wrapper {
+      text-align: center;
+      border: 1px solid #ddd;
+      padding-left: 30px;
+      padding-right: 30px;
+      padding-bottom: 50px;
+
+      .banner {
+        height: 103px;
+        position: relative;
+        overflow-y: hidden;
+        img {
+        }
+      }
+      p {
+        position: relative;
+        padding-top: 15px;
+        width: 90%;
+        margin: auto;
+        font-size: 19px;
+        font-weight: 600;
+        color: #999797;
+      }
+      button {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        gap: 10px;
+        background-color: #428ced;
+        border: none;
+        border-radius: 10px;
+        padding: 5px 0;
+        margin-top: 20px;
+
+        .fb-logo-wrap {
+          position: relative;
+          width: 14px;
+          height: 18px;
+          overflow: hidden;
+          top: 6px;
+
+          img {
+            top: -300px;
+            right: 0;
+            position: absolute;
+          }
+        }
+        p {
+          margin: 0;
+          padding-top: 0 !important;
+          text-align: left;
+          display: inline;
+          width: 60%;
+          color: white;
+        }
+      }
+      .or-wrap {
+        p {
+          font-weight: 500;
+          color: #9c9898;
+          position: relative;
+          margin-top: 10px;
+          font-size: 15px;
+
+          &::before {
+            content: '';
+            width: 41%;
+            height: 1px;
+            left: 0;
+            top: 30px;
+            background-color: rgb(198, 195, 195);
+            position: absolute;
+          }
+          &::after {
+            content: '';
+            width: 41%;
+            height: 1px;
+            right: 0;
+            top: 30px;
+            background-color: rgb(198, 195, 195);
+            position: absolute;
+          }
+        }
+      }
+      form {
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        input {
+          padding: 6px 10px;
+          font-size: 13px;
+          border: 1px solid #ddd;
+          margin-bottom: 10px;
+          background-color: #f8f6f6;
+          border-radius: 4px;
+
+          &:focus {
+            border: 1px solid #aba8a8;
+            outline: none;
+          }
+        }
+        p {
+          font-size: 13px;
+          color: #979797;
+          a {
+            color: #6c6969;
+          }
+        }
+        button {
+          color: #ffff;
+          font-weight: 600;
+          background: #6599dd;
+        }
+      }
+    }
+
+    .bottom-wrapper {
+      margin-top: 20px;
+      text-align: center;
+      border: 1px solid #ddd;
+      padding: 23px 30px;
+
+      p {
+        margin-bottom: 0;
+
+        a {
+        }
+      }
+    }
+
+    .get-app {
+      text-align: center;
+      padding-top: 15px;
+      p {
+      }
+
+      .img-wrap {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        img {
+          width: 33%;
+        }
+      }
+    }
+  }
+
+  .footer-wrap {
+    width: 100%;
+    .row {
+      width: 100%;
+
+      .footer {
+        align-items: center;
+        margin-top: 70px;
+        ul {
+          display: flex;
+          flex-direction: row;
+          gap: 17px;
+          justify-content: center;
+          flex-wrap: wrap;
+
+          li {
+            a {
+              color: #737373;
+              font-size: 13px;
+            }
+          }
+        }
+
+        .footer-main {
+          display: flex;
+          justify-content: center;
+          padding-bottom: 30px;
+          gap: 10px;
+
+          select {
+            padding: 0px;
+            border: none;
+            font-size: 14px;
+            color: #737373;
+          }
+          p {
+            margin-bottom: 0;
+            font-size: 14px;
+            color: #737373;
+          }
+        }
+      }
+    }
+  }
+}
