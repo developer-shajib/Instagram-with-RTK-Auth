@@ -4,8 +4,37 @@ import microsoftImg from '../../assets/image/microsoft.png';
 import playStoreImg from '../../assets/image/google_playStore.png';
 import { Link } from 'react-router-dom';
 import './Register.scss';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { register } from '../../features/Instagram/InstaApi.jsx';
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const [input, setInput] = useState({
+    name: '',
+    email: '',
+    username: '',
+    password: '',
+  });
+
+  // Handle Input change
+  const handleInputChange = (e) => {
+    setInput((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
+  };
+
+  // Handle Form Submit
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(register(input));
+  };
+
+  // useEffect(() => {
+  // if (logUser) {
+  //   navigate('/');
+  // }
+  // }, []);
+
   return (
     <>
       <div className='wrapper'>
@@ -27,11 +56,35 @@ const Register = () => {
                 <div className='or-wrap'>
                   <p>OR</p>
                 </div>
-                <form action=''>
-                  <input type='text' placeholder='Mobile Number or Email' />
-                  <input type='text' placeholder='Full Name' />
-                  <input type='text' placeholder='Username' />
-                  <input type='text' placeholder='Password' />
+                <form action='' onSubmit={handleFormSubmit}>
+                  <input
+                    name='email'
+                    value={input.email}
+                    onChange={handleInputChange}
+                    type='text'
+                    placeholder='Mobile Number or Email'
+                  />
+                  <input
+                    name='name'
+                    value={input.name}
+                    onChange={handleInputChange}
+                    type='text'
+                    placeholder='Full Name'
+                  />
+                  <input
+                    name='username'
+                    value={input.username}
+                    onChange={handleInputChange}
+                    type='text'
+                    placeholder='Username'
+                  />
+                  <input
+                    name='password'
+                    value={input.password}
+                    onChange={handleInputChange}
+                    type='password'
+                    placeholder='Password'
+                  />
 
                   <p>
                     People who use our service may have uploaded your contact information to Instagram.{' '}

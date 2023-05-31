@@ -1,6 +1,6 @@
 import './Menu.scss';
 
-export const Menu = ({ setShowModal }) => {
+export const Menu = ({ setShowModal, hide, menuModal }) => {
   return (
     <>
       {/* ==================== Menu ===================== */}
@@ -281,8 +281,8 @@ export const Menu = ({ setShowModal }) => {
                   <p>Profile</p>
                 </a>
               </li>
-              <li className='menu-icon'>
-                <a href='#'>
+              <li onClick={() => hide(!menuModal)} className='menu-icon'>
+                <a onClick={() => hide(!menuModal)} href='#'>
                   <svg
                     aria-label='Settings'
                     className='_ab6-'

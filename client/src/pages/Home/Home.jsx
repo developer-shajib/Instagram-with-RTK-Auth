@@ -6,19 +6,24 @@ import './Home.scss';
 import { HashLoader } from 'react-spinners';
 import { Menu } from '../../components/Menu/Menu.jsx';
 import Modal from '../../components/Modal/Modal.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { TokenUserAction } from '../../features/Instagram/InstaApi.jsx';
+import { Navigate, useNavigate } from 'react-router-dom';
+import MenuModal from '../../components/MenuModal/MenuModal.jsx';
+import { getAllInstaData } from '../../features/Instagram/InstaSlice.jsx';
+import Cookies from 'js-cookie';
 
 const Home = () => {
-  // Get data State
   const [adminData, setAdminData] = useState([]);
-
-  // image upload loading
-  const [loading, setLoading] = useState(false);
-
-  // Modal State
+  // const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
-  // preview Image state
   const [images, setImages] = useState([]);
+  const dispatch = useDispatch('');
+  const [menuModal, setMenuModal] = useState(false);
+  const [profileImg, setProfileImg] = useState(null);
+
+  const navigate = useNavigate();
+  const { logUser } = useSelector(getAllInstaData);
 
   // handleInputChange
   const handleInputChange = (e) => {
@@ -33,45 +38,54 @@ const Home = () => {
 
   // Image submit Btn
   const handleNextBtn = () => {
-    setLoading(true);
-    const data = new FormData();
-    images.forEach((item) => {
-      data.append('file', item);
-      data.append('cloud_name', 'do6dt1ot2');
-      data.append('upload_preset', 'sorobindu-2');
-      axios.post('https://api.cloudinary.com/v1_1/do6dt1ot2/image/upload', data).then((res) => {
-        setAdminData((prevState) => [...prevState, res.data.url]);
-        axios.post('http://localhost:5050/post', { post_img: res.data.url }).then(() => {
-          axios.get('http://localhost:5050/post?_sort=id&_order=desc').then((res) => {
-            setAdminData(res.data);
-            setLoading(false);
-          });
-        });
-
-        setImages([]);
-      });
-    });
-    setShowModal(false);
+    // setLoading(true);
+    // const data = new FormData();
+    // images.forEach((item) => {
+    //   data.append('file', item);
+    //   data.append('cloud_name', 'do6dt1ot2');
+    //   data.append('upload_preset', 'sorobindu-2');
+    //   axios.post('https://api.cloudinary.com/v1_1/do6dt1ot2/image/upload', data).then((res) => {
+    //     setAdminData((prevState) => [...prevState, res.data.url]);
+    //     axios.post('http://localhost:5050/post', { post_img: res.data.url }).then(() => {
+    //       axios.get('http://localhost:5050/post?_sort=id&_order=desc').then((res) => {
+    //         setAdminData(res.data);
+    //         setLoading(false);
+    //       });
+    //     });
+    //     setImages([]);
+    //   });
+    // });
+    // setShowModal(false);
   };
 
-  // useEffect
+  const token = Cookies.get('aToken');
+
   useEffect(() => {
-    axios.get('http://localhost:5050/post?_sort=id&_order=desc').then((res) => {
-      setAdminData(res.data);
-    });
-  }, [setAdminData]);
+    if (token) {
+      dispatch(TokenUserAction(token));
+    }
+
+    // if (!logUser) {
+    //   navigate('/login');
+    // }
+
+    // console.log(logUser);
+  }, [dispatch, token]);
 
   return (
     <>
       {/* ==================== Home Page===================== */}
       <div className='home'>
-        {loading && (
-          <h1 className='loader'>
-            <span>
-              <HashLoader color='#ffffff' />
-            </span>
-          </h1>
-        )}
+        {/* {loading && (
+      <h1 className='loader'>
+        <span>
+          <HashLoader color='#ffffff' />
+        </span>
+      </h1>
+    )} */}
+
+        {/* ----- Menu Modal------- */}
+        {menuModal && <MenuModal hide={setMenuModal} />}
 
         <div className='content'>
           <div className='row'>
@@ -143,7 +157,7 @@ const Home = () => {
               </Modal>
             )}
             <div className='col-md-2 home-menu-show'>
-              <Menu setShowModal={setShowModal} />
+              <Menu hide={setMenuModal} menuModal={menuModal} setShowModal={setShowModal} />
             </div>
 
             {/* ==================== Body ===================== */}
@@ -369,9 +383,22 @@ const Home = () => {
                     <div className='profile-wrapper'>
                       <div className='profile-bar'>
                         <a href='#'>
-                          <img
-                            src='https://www.shutterstock.com/image-photo/smiling-african-american-office-employee-260nw-1032686038.jpg'
-                            alt=''
+                          <label htmlFor='profile_img'>
+                            {profileImg ? (
+                              <img style={{ cursor: 'pointer' }} src={URL.createObjectURL(profileImg)} alt='' />
+                            ) : (
+                              <img
+                                style={{ cursor: 'pointer' }}
+                                src='https://www.shutterstock.com/image-photo/smiling-african-american-office-employee-260nw-1032686038.jpg'
+                                alt=''
+                              />
+                            )}
+                          </label>
+                          <input
+                            onChange={(e) => setProfileImg(e.target.files[0])}
+                            style={{ display: 'none' }}
+                            id='profile_img'
+                            type='file'
                           />
                         </a>
                         <div className='profile-info'>

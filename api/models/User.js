@@ -27,6 +27,10 @@ const userSchema = mongoose.Schema(
       type: String,
       default: null,
     },
+    post_img: {
+      type: Array,
+      default: null,
+    },
     role: {
       type: String,
       enum: ['Admin', 'Editor', 'User'],

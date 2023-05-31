@@ -8,10 +8,12 @@ import ss3 from '../../assets/image/screenshot3.png';
 import ss4 from '../../assets/image/screenshot4.png';
 import Slider from 'react-slick';
 import './Login.scss';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { LoginFormAction } from '../../features/Instagram/InstaApi.jsx';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { LoginFormAction, TokenUserAction } from '../../features/Instagram/InstaApi.jsx';
+import { getAllInstaData, reset } from '../../features/Instagram/InstaSlice.jsx';
+import Cookies from 'js-cookie';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -19,6 +21,8 @@ const Login = () => {
     email: '',
     password: '',
   });
+  const navigate = useNavigate();
+  const { logUser, isSuccess } = useSelector(getAllInstaData);
 
   // Input State Manage
   const handleInputChange = (e) => {
@@ -28,7 +32,6 @@ const Login = () => {
   // Handle Form Submit
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
     dispatch(LoginFormAction(input));
   };
 
@@ -42,8 +45,23 @@ const Login = () => {
     autoplay: true,
   };
 
+  // const token = Cookies.get('aToken');
+
+  // useEffect(() => {
+  //   if (token) {
+  //     dispatch(TokenUserAction(token));
+  //   }
+
+  //   // if (logUser.length > 0) {
+  //   //   navigate('/');
+  //   // }
+
+  //   // console.log(logUser);
+  // }, [dispatch]);
+
   return (
     <>
+      {console.log(logUser)}
       <div className='login-wrapper'>
         <div className='container'>
           <div className='row'>
@@ -90,7 +108,7 @@ const Login = () => {
                     type='password'
                     placeholder='Password'
                   />
-                  <button type='submit'>Log in</button>
+                  <button>Log in</button>
 
                   <div className='or'>
                     <p>OR</p>
